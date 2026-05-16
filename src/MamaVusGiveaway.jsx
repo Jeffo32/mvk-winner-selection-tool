@@ -1764,7 +1764,8 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     maxWidth: 'min(98vw, 70vh)',
-    marginTop: '8px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
     zIndex: 2,
   },
   spotlight: {
@@ -1820,7 +1821,7 @@ const styles = {
     filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.28))',
   },
   spinBtn: {
-    marginTop: 'auto',
+    marginTop: 0,
     marginBottom: '8px',
     padding: '18px 56px',
     background: 'linear-gradient(180deg, #C4985A 0%, #A87A40 100%)',
