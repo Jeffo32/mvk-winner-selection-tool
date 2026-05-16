@@ -23,7 +23,7 @@ export default function MamaVusGiveaway() {
   const [winner, setWinner] = useState(null);
   const [showWinner, setShowWinner] = useState(false);
   const [muted, setMuted] = useState(false);
-  const [showPanel, setShowPanel] = useState(true);
+  const [showPanel, setShowPanel] = useState(false);
   const [countdown, setCountdown] = useState(null); // 3,2,1,"GO" then null
   const [settling, setSettling] = useState(false); // tense pause after wheel stops
   const [winnerIndex, setWinnerIndex] = useState(null); // for pulsing the winning segment
