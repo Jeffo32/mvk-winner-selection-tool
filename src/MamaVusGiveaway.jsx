@@ -529,11 +529,11 @@ export default function MamaVusGiveaway() {
     if (entrants.length > 42) fontSize = 13;
 
     // Position the text group at segment center, rotated so it runs along the radius
-    const anchorR = isLeftHalf ? textOuterR : textInnerR;
-    const ax = center + anchorR * Math.cos((midAngle * Math.PI) / 180);
-    const ay = center + anchorR * Math.sin((midAngle * Math.PI) / 180);
-    // Rotation: align text with radius. Flip 180 on left half.
+    const ax = center + textOuterR * Math.cos((midAngle * Math.PI) / 180);
+    const ay = center + textOuterR * Math.sin((midAngle * Math.PI) / 180);
+    // Rotation: align text with radius. Flip 180 on left half so it's never upside-down.
     const textRotation = isLeftHalf ? midAngle + 180 : midAngle;
+    const textAnchor = isLeftHalf ? 'start' : 'end';
 
     return (
       <g key={i} style={isWinningSegment ? { animation: 'segPulse 0.5s ease-in-out infinite' } : undefined}>
@@ -545,7 +545,7 @@ export default function MamaVusGiveaway() {
           fontSize={fontSize}
           fontFamily="'Playfair Display', serif"
           fontWeight="700"
-          textAnchor="start"
+          textAnchor={textAnchor}
           dominantBaseline="middle"
           transform={`rotate(${textRotation}, ${ax}, ${ay})`}
           style={{ pointerEvents: 'none' }}
