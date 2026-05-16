@@ -575,6 +575,10 @@ export default function MamaVusGiveaway() {
         @keyframes countGo { 0% { transform: translate(-50%,-50%) scale(0.4); opacity: 0; } 40% { transform: translate(-50%,-50%) scale(1.3); opacity: 1; } 100% { transform: translate(-50%,-50%) scale(1.1); opacity: 0; } }
         @keyframes glowRing { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.04); } }
         @keyframes settleShake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-3px); } 40% { transform: translateX(3px); } 60% { transform: translateX(-2px); } 80% { transform: translateX(2px); } }
+        details > summary::-webkit-details-marker { display: none; }
+        details > summary { list-style: none; }
+        .drawer-chevron { transition: transform 0.2s ease; display: inline-block; }
+        details[open] > summary > .drawer-chevron { transform: rotate(45deg); }
       `}</style>
 
       {/* HEADER + STAGE SWITCHER */}
@@ -747,9 +751,12 @@ export default function MamaVusGiveaway() {
               </div>
             )}
 
-            {/* MANUAL ADD */}
-            <div style={styles.manualAddBox}>
-              <div style={styles.manualAddLabel}>Add manually</div>
+            {/* MANUAL ADD — drawer */}
+            <details style={styles.manualAddBox}>
+              <summary style={styles.manualAddSummary}>
+                <span style={styles.manualAddLabel}>Add manually</span>
+                <span className="drawer-chevron" style={styles.manualAddChevron}>+</span>
+              </summary>
               <div style={styles.manualAddRow}>
                 <input
                   style={styles.manualInput}
@@ -774,7 +781,7 @@ export default function MamaVusGiveaway() {
               <div style={styles.manualAddHelp}>
                 Spot anyone the parser missed? Add them here.
               </div>
-            </div>
+            </details>
           </section>
 
           {/* SEND TO SPINNER */}
@@ -783,12 +790,6 @@ export default function MamaVusGiveaway() {
               <button style={styles.bigCta} onClick={sendToSpinner}>
                 <span style={styles.bigCtaMain}>Fill the Bowl</span>
                 <span style={styles.bigCtaSub}>{finalList.length} entrants → spinner</span>
-              </button>
-              <button
-                style={styles.secondaryCta}
-                onClick={() => copyToClipboard(finalList.map(e => e.name).join('\n'))}
-              >
-                {copied ? '✓ Copied to clipboard' : 'Copy list'}
               </button>
             </div>
           )}
@@ -1435,10 +1436,26 @@ const styles = {
   },
   manualAddBox: {
     marginTop: '12px',
-    padding: '16px',
+    padding: '14px 16px',
     background: '#FAF5EC',
     borderRadius: '12px',
     border: '1px dashed rgba(196, 152, 90, 0.4)',
+  },
+  manualAddSummary: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    cursor: 'pointer',
+    listStyle: 'none',
+    userSelect: 'none',
+    padding: '2px 0',
+    marginBottom: 0,
+  },
+  manualAddChevron: {
+    fontSize: '20px',
+    fontWeight: 400,
+    color: '#C4985A',
+    lineHeight: 1,
   },
   manualAddLabel: {
     fontSize: '10px',
@@ -1446,11 +1463,11 @@ const styles = {
     letterSpacing: '2px',
     color: '#C4985A',
     textTransform: 'uppercase',
-    marginBottom: '10px',
   },
   manualAddRow: {
     display: 'flex',
     gap: '8px',
+    marginTop: '12px',
   },
   manualInput: {
     flex: 1,
@@ -1692,8 +1709,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: '16px',
+    justifyContent: 'flex-start',
+    padding: '8px 8px 24px',
     position: 'relative',
     overflow: 'hidden',
   },
@@ -1746,7 +1763,8 @@ const styles = {
     alignItems: 'flex-start',
     justifyContent: 'center',
     width: '100%',
-    maxWidth: 'min(88vw, 78vh)',
+    maxWidth: 'min(98vw, 70vh)',
+    marginTop: '8px',
     zIndex: 2,
   },
   spotlight: {
@@ -1802,7 +1820,8 @@ const styles = {
     filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.28))',
   },
   spinBtn: {
-    marginTop: '24px',
+    marginTop: 'auto',
+    marginBottom: '8px',
     padding: '18px 56px',
     background: 'linear-gradient(180deg, #C4985A 0%, #A87A40 100%)',
     color: '#FAF5EC',
