@@ -645,10 +645,31 @@ export default function MamaVusGiveaway() {
       {/* ==================== FILTER STAGE ==================== */}
       {stage === 'filter' && (
         <main style={styles.filterMain}>
+          {/* CONTROLS */}
+          <section style={styles.section}>
+            <div style={styles.sectionHead}>
+              <div style={styles.sectionLabel}>01 · Tags required</div>
+            </div>
+            <div style={styles.tagButtons}>
+              {[2, 3, 4, 5].map(n => (
+                <button
+                  key={n}
+                  onClick={() => setMinTags(n)}
+                  style={{
+                    ...styles.tagBtn,
+                    ...(minTags === n ? styles.tagBtnActive : {}),
+                  }}
+                >
+                  {n}+
+                </button>
+              ))}
+            </div>
+          </section>
+
           {/* PASTE */}
           <section style={styles.section}>
             <div style={styles.sectionHead}>
-              <div style={styles.sectionLabel}>01 · Paste FB comments</div>
+              <div style={styles.sectionLabel}>02 · Paste FB comments</div>
               <div style={styles.sectionCount}>
                 {raw ? `${raw.length.toLocaleString()} chars` : '—'}
               </div>
@@ -665,27 +686,6 @@ export default function MamaVusGiveaway() {
               placeholder="Paste the entire FB comment section here. Messy is fine."
               spellCheck={false}
             />
-          </section>
-
-          {/* CONTROLS */}
-          <section style={styles.section}>
-            <div style={styles.sectionHead}>
-              <div style={styles.sectionLabel}>02 · Tags required</div>
-            </div>
-            <div style={styles.tagButtons}>
-              {[2, 3, 4, 5].map(n => (
-                <button
-                  key={n}
-                  onClick={() => setMinTags(n)}
-                  style={{
-                    ...styles.tagBtn,
-                    ...(minTags === n ? styles.tagBtnActive : {}),
-                  }}
-                >
-                  {n}+
-                </button>
-              ))}
-            </div>
           </section>
 
           {/* QUALIFYING */}
@@ -717,7 +717,12 @@ export default function MamaVusGiveaway() {
             )}
 
             {finalList.length > 0 && (
-              <div style={styles.entrantList}>
+              <details style={styles.qualifyingDrawer}>
+                <summary style={styles.manualAddSummary}>
+                  <span style={styles.manualAddLabel}>Show entrants ({finalList.length})</span>
+                  <span className="drawer-chevron" style={styles.manualAddChevron}>+</span>
+                </summary>
+                <div style={{ ...styles.entrantList, marginTop: '12px' }}>
                 {finalList.map((e, i) => (
                   <div key={i} style={styles.entrantRow}>
                     <div style={styles.entrantNum}>{String(i + 1).padStart(2, '0')}</div>
@@ -748,7 +753,8 @@ export default function MamaVusGiveaway() {
                     </button>
                   </div>
                 ))}
-              </div>
+                </div>
+              </details>
             )}
 
             {/* MANUAL ADD — drawer */}
@@ -1077,7 +1083,7 @@ export default function MamaVusGiveaway() {
                 <text x="80" y="38" fill="#C4985A" fontSize="22" fontFamily="'Montserrat', sans-serif" fontWeight="700" letterSpacing="6" textAnchor="middle">WINNER</text>
               </svg>
             </div>
-            <div style={styles.winnerScript}>and the bowl belongs to...</div>
+            <div style={styles.winnerScript}>and the $50 goes to...</div>
             <div style={styles.winnerName}>{winner}</div>
             <div style={styles.winnerDivider}>
               <svg width="120" height="20" viewBox="0 0 120 20">
@@ -1441,6 +1447,12 @@ const styles = {
     borderRadius: '12px',
     border: '1px dashed rgba(196, 152, 90, 0.4)',
   },
+  qualifyingDrawer: {
+    padding: '14px 16px',
+    background: '#FAF5EC',
+    borderRadius: '12px',
+    border: '1px solid rgba(196, 152, 90, 0.25)',
+  },
   manualAddSummary: {
     display: 'flex',
     alignItems: 'center',
@@ -1709,7 +1721,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     padding: '8px 8px 24px',
     position: 'relative',
     overflow: 'hidden',
@@ -1764,8 +1776,6 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     maxWidth: 'min(98vw, 70vh)',
-    marginTop: 'auto',
-    marginBottom: 'auto',
     zIndex: 2,
   },
   spotlight: {
@@ -1821,8 +1831,7 @@ const styles = {
     filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.28))',
   },
   spinBtn: {
-    marginTop: 0,
-    marginBottom: '8px',
+    marginTop: '24px',
     padding: '18px 56px',
     background: 'linear-gradient(180deg, #C4985A 0%, #A87A40 100%)',
     color: '#FAF5EC',
